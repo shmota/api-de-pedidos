@@ -1,13 +1,13 @@
-import connect from "../connect.js";
+import connect from "../../connect.js";
 
 export async function selectOrders(id = null) {
-    const client = await connect();
+  const client = await connect();
 
-    let res;
+  let res;
 
-    if(id == null){
-      res = await client.query(
-        `SELECT o.*,
+  if (id == null) {
+    res = await client.query(
+      `SELECT o.*,
         COALESCE(
           json_agg(
             json_build_object(
@@ -22,10 +22,10 @@ export async function selectOrders(id = null) {
         LEFT JOIN items i
           ON i.orderId = o.orderId
         GROUP BY o.orderId;`);
-    }
-    else{
-      res = await client.query(
-        `SELECT o.*,
+  }
+  else {
+    res = await client.query(
+      `SELECT o.*,
         COALESCE(
           json_agg(
             json_build_object(
@@ -41,9 +41,9 @@ export async function selectOrders(id = null) {
           ON i.orderId = o.orderId
         WHERE o.orderId = '${id}'
         GROUP BY o.orderId;`);
-    }
+  }
 
-    console.log(JSON.stringify(res.rows))
+  console.log(JSON.stringify(res.rows))
 
-    return res.rows;
+  return res.rows;
 }

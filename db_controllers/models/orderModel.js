@@ -1,7 +1,7 @@
 
 export class Order{
 
-  constructor({numeroPedido, valorTotal, dataCriacao, items}){
+  constructor({numeroPedido = "", valorTotal=0.1, dataCriacao= new Date(), items=[]}){
     this.numeroPedido = numeroPedido;
     this.valorTotal = valorTotal;
     this.dataCriacao = new Date(dataCriacao);

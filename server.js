@@ -1,7 +1,8 @@
 import express from 'express'
-import { selectOrders } from './db_controllers/actions/select.js'
+import { selectOrders } from './db_controllers/actions/orders/select.js'
 import { Order } from './db_controllers/models/orderModel.js';
-import { createOrder } from './db_controllers/actions/create.js';
+import { createOrder } from './db_controllers/actions/orders/create.js';
+import { updateOrder } from './db_controllers/actions/orders/update.js';
 
 const app = express()
 
@@ -25,7 +26,7 @@ app.post('/order', async (req, res) => {
     }
     else{
 
-      res.status(501).send( creation )
+      res.status(501).send(creation)
 
     }
 
@@ -49,22 +50,38 @@ app.get('/order/list', async (req, res) => {
 //Uri para obter dados de um pedido recebendo um id como parêmetro na URL
 app.get('/order/:id', async (req, res) => {
   
-  const resposta = await selectOrders(req.params.id);
+  const orderId = await selectOrders(req.params.id);
 
   if(resposta.length == 0){
     res.status(404).send("Pedido não encontrado");
   }
   else{
     
-    res.json(resposta)
+    res.json(orderId)
 
   }
 
 })
 
 //Uri para atualizar os dados de um pedido recebendo o id como parêmetro na URL
-app.put('/order', (req, res) => {
-  res.send('Hello World')
+app.put('/order/:id', async (req, res) => {
+
+  const orderId = req.params.id;
+
+  const newOrder = new Order(req.body);
+
+  const errors = newOrder.isValid();
+
+  if(errors.length == 0){
+    const result = await updateOrder(orderId, newOrder);
+    res.status(202).send(result);
+  }
+  else{
+
+    res.status(400).send(errors);
+  
+  }
+
 })
 
 //Uri para excluir um pedido recebendo o id como parêmetro na URL
