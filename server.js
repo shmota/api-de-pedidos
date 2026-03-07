@@ -10,11 +10,18 @@ app.post('/order/teste', (req, res) => {
 })
 
 //Uri para obter dados de um pedido recebendo um id como parêmetro na URL
-app.get('/order', async (req, res) => {
+app.get('/order/:id', async (req, res) => {
+  
+  const resposta = await selectOrders(req.params.id);
 
-  const resposta = await selectOrders(req.query.id);
+  if(resposta.length == 0){
+    res.status(404).send("Pedido não encontrado");
+  }
+  else{
+    
+    res.json(resposta)
 
-  res.json(resposta)
+  }
 
 })
 
