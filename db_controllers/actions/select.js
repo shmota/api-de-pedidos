@@ -8,33 +8,39 @@ export async function selectOrders(id = null) {
     if(id == null){
       res = await client.query(
         `SELECT o.*,
-        json_agg(
-          json_build_object(
-            'productId', i.productId,
-            'quantity', i.quantity,
-            'price', i.price
+        COALESCE(
+          json_agg(
+            json_build_object(
+              'productId', i.productId,
+              'quantity', i.quantity,
+              'price', i.price
             )
-          ) AS items
-          FROM orders o
-          JOIN items i 
-          ON o.orderId = i.orderId
-          GROUP BY o.orderId;`);
+          ) FILTER (WHERE i.productId IS NOT NULL),
+          '[]'
+        ) AS items
+        FROM orders o
+        LEFT JOIN items i
+          ON i.orderId = o.orderId
+        GROUP BY o.orderId;`);
     }
     else{
       res = await client.query(
         `SELECT o.*,
-        json_agg(
-          json_build_object(
-            'productId', i.productId,
-            'quantity', i.quantity,
-            'price', i.price
+        COALESCE(
+          json_agg(
+            json_build_object(
+              'productId', i.productId,
+              'quantity', i.quantity,
+              'price', i.price
             )
-          ) AS items
-          FROM orders o
-          JOIN items i 
-          ON o.orderId = i.orderId
-          WHERE o.orderId = '${id}'
-          GROUP BY o.orderId;`);
+          ) FILTER (WHERE i.productId IS NOT NULL),
+          '[]'
+        ) AS items
+        FROM orders o
+        LEFT JOIN items i
+          ON i.orderId = o.orderId
+        WHERE o.orderId = '${id}'
+        GROUP BY o.orderId;`);
     }
 
     console.log(JSON.stringify(res.rows))

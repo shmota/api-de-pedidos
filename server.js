@@ -1,12 +1,49 @@
 import express from 'express'
 import { selectOrders } from './db_controllers/actions/select.js'
+import { Order } from './db_controllers/models/orderModel.js';
+import { createOrder } from './db_controllers/actions/create.js';
 
 const app = express()
 
+app.use(express.json());
 
 //Uri para criar um novo pedido 
-app.post('/order/teste', (req, res) => {
-  res.send('Hello World')
+app.post('/order', async (req, res) => {
+
+  const order = new Order(req.body)
+
+  const errors = order.isValid() 
+
+  if(errors.length == 0){
+
+    const creation = await createOrder(order);
+
+    if(creation === "ok"){
+
+      res.status(201).send("Pedido criado com sucesso")
+
+    }
+    else{
+
+      res.status(501).send( creation )
+
+    }
+
+  }
+  else(
+
+    res.status(400).send(errors)
+
+  )
+
+})
+
+//Uri para listar todos os pedidos 
+app.get('/order/list', async (req, res) => {
+  
+  const resposta = await selectOrders();
+  
+  res.send(resposta)
 })
 
 //Uri para obter dados de um pedido recebendo um id como parêmetro na URL
@@ -23,11 +60,6 @@ app.get('/order/:id', async (req, res) => {
 
   }
 
-})
-
-//Uri para listar todos os pedidos 
-app.get('/order/list', (req, res) => {
-  res.send('Hello World')
 })
 
 //Uri para atualizar os dados de um pedido recebendo o id como parêmetro na URL
