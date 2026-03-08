@@ -8,6 +8,11 @@ export class Order{
     this.items = items;
   }
 
+  /**
+   * Valida os dados da instância do pedido.
+   * @returns {string[]} Lista de inconsistências encontradas.
+   * Retorna um array vazio caso os dados sejam válidos.
+   */
   isValid(){
 
     let erros = [];

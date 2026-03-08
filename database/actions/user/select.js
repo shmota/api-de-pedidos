@@ -1,4 +1,4 @@
-import connect from "../db_controllers/connect.js";
+import connect from "../../connect.js";
 
 export async function getUser(username) {
 
