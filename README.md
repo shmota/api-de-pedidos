@@ -123,6 +123,13 @@ npm start
 
 Servidor rodando em http://localhost:3000.
 
+## 📮 Documentação no Postman
+
+A documentação e os testes da API estão disponíveis no Postman:
+
+🔗 [Abrir documentação no Postman](https://www.postman.com/supply-technologist-33225899/api-de-pedidos)
+
+
 ## 🔑 Autenticação
 
 POST /login
