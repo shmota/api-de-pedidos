@@ -171,7 +171,7 @@ Response (sucesso):
 | Endpoint | Método | Descrição |
 |----------|--------|-----------|
 | /order | POST | ➕ Cria um novo pedido com itens |
-| /order | GET | 📄 Lista todos os pedidos |
+| /order/list | GET | 📄 Lista todos os pedidos |
 | /order/:id | GET | 🔍 Busca pedido específico |
 | /order/:id | PUT | ✏️ Atualiza pedido |
 | /order/:id | DELETE | 🗑️ Remove pedido |
