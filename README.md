@@ -95,6 +95,25 @@ CREATE TABLE users (
 );
 ```
 
+### Importante: quando for criar um usuário senha criptografe a senha em em bcrypt, exemplo:
+
+Site para encriptar a senha [bcrypt generator](https://bcrypt-generator.com/).
+
+Usuario: "Admin"
+
+Senha: "Senha123"
+
+```text
+
+INSERT INTO users
+VALUES (
+  '1',
+  'admin',
+  '$2a$12$xWUivR2trOmJD5aik56dgezhECzK8vcsIGZhNYOJ7dVULBqreh.Q2'
+);
+
+```
+
 Clone o repositório:
 
 ```text
