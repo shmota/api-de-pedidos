@@ -1,4 +1,4 @@
-# 📦 Sistema de Pedidos com Node.js e PostgreSQL
+# 📦 Api de pedidos com Node.js e PostgreSQL
 
 ## 🚀 Descrição
 
