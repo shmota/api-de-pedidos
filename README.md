@@ -2,7 +2,7 @@
 
 ## 🚀 Descrição
 
-Este projeto é um sistema de gerenciamento de pedidos desenvolvido com Node.js, Express e PostgreSQL.
+Este projeto é uma api de gerenciamento de pedidos desenvolvido com Node.js, Express e PostgreSQL.
 Permite criar, listar, atualizar e excluir pedidos, além de manipular itens associados a cada pedido. O sistema também possui autenticação JWT e hashing de senha com bcrypt.
 
 ## ✨ Funcionalidades
